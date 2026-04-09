@@ -39,7 +39,7 @@ const Reports = () => {
         return {
           'Tenant Name': tenant?.name || 'Unknown',
           'Date': new Date(tx.date).toLocaleDateString('en-IN'),
-          'Payment Mode': tx.mode || tx.paymentMode || '-',
+          'Payment Mode': tx.paymentMode || tx.mode || '-',
           'Type': tx.type,
           'For Month': tx.forMonth || '-',
           'Amount (₹)': tx.amount
@@ -172,7 +172,7 @@ const Reports = () => {
                                   <td>{new Date(tx.date).toLocaleDateString('en-IN')}</td>
                                   <td>
                                     <span className="badge badge-success" style={{ fontSize: '12px' }}>
-                                      {tx.mode || tx.paymentMode || '—'}
+                                      {tx.paymentMode || tx.mode || '—'}
                                     </span>
                                   </td>
                                   <td style={{ textAlign: 'right', fontWeight: '600', color: 'var(--success)' }}>₹{Number(tx.amount).toLocaleString()}</td>
