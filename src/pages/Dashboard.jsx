@@ -62,7 +62,7 @@ const Dashboard = () => {
   
   const pendingRentTenants = data.tenants
     .filter(t => t.pgId === activePgId && t.lastRentPaidMonth !== currentMonthStr)
-    .sort((a, b) => a.roomId.localeCompare(b.roomId, undefined, { numeric: true, sensitivity: 'base' }));
+    .sort((a, b) => String(a.roomId).localeCompare(String(b.roomId), undefined, { numeric: true, sensitivity: 'base' }));
 
   const scrollToRent = () => {
     document.getElementById('rent-management-section')?.scrollIntoView({ behavior: 'smooth' });
