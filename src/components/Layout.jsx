@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, Users, Building, LogOut, Moon, Sun, PieChart, Settings as SettingsIcon, KeyRound, Eye, EyeOff, ShieldCheck, X } from 'lucide-react';
+import { LayoutDashboard, Users, Building, LogOut, Moon, Sun, PieChart, Settings as SettingsIcon, Key, CheckCircle, X } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useAppData } from '../context/AppDataContext';
 
@@ -103,7 +103,7 @@ const ChangePasswordModal = ({ user, onClose, changePassword }) => {
               background: 'linear-gradient(135deg, var(--accent-color), #5e5ce6)',
               display: 'flex', alignItems: 'center', justifyContent: 'center'
             }}>
-              <KeyRound size={20} color="white" />
+              <Key size={20} color="white" />
             </div>
             <div>
               <h2 style={{ fontSize: '20px', marginBottom: '2px' }}>Change Password</h2>
@@ -120,7 +120,7 @@ const ChangePasswordModal = ({ user, onClose, changePassword }) => {
             display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px',
             padding: '32px 0', color: 'var(--success)'
           }}>
-            <ShieldCheck size={48} />
+            <CheckCircle size={48} />
             <p style={{ fontWeight: '600', fontSize: '16px' }}>Password updated!</p>
           </div>
         ) : (
@@ -140,7 +140,7 @@ const ChangePasswordModal = ({ user, onClose, changePassword }) => {
                   style={inputStyle}
                 />
                 <button type="button" style={eyeStyle} onClick={() => setShowCurrent(v => !v)} tabIndex={-1}>
-                  {showCurrent ? <EyeOff size={18} /> : <Eye size={18} />}
+                  {showCurrent ? '🙈' : '👁'}
                 </button>
               </div>
             </div>
@@ -160,7 +160,7 @@ const ChangePasswordModal = ({ user, onClose, changePassword }) => {
                   style={inputStyle}
                 />
                 <button type="button" style={eyeStyle} onClick={() => setShowNew(v => !v)} tabIndex={-1}>
-                  {showNew ? <EyeOff size={18} /> : <Eye size={18} />}
+                  {showNew ? '🙈' : '👁'}
                 </button>
               </div>
               {/* Strength bar */}
@@ -198,7 +198,7 @@ const ChangePasswordModal = ({ user, onClose, changePassword }) => {
                   }}
                 />
                 <button type="button" style={eyeStyle} onClick={() => setShowConfirm(v => !v)} tabIndex={-1}>
-                  {showConfirm ? <EyeOff size={18} /> : <Eye size={18} />}
+                  {showConfirm ? '🙈' : '👁'}
                 </button>
               </div>
               {confirmPwd && confirmPwd !== newPwd && (
