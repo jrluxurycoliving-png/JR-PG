@@ -15,7 +15,22 @@ const Dashboard = () => {
   });
 
   const activePg = data.pgs.find(p => p.id === activePgId);
-  if (!activePg) return <div>Please select or create a PG.</div>;
+  if (!activePg) return (
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '60vh', gap: '16px', textAlign: 'center' }}>
+      <div style={{ fontSize: '64px' }}>🏢</div>
+      <h2>No PG Property Found</h2>
+      <p style={{ color: 'var(--text-secondary)', maxWidth: '420px', lineHeight: 1.6 }}>
+        Your <strong>PGs sheet</strong> in Google Sheets is empty. Add at least one PG row and refresh.
+      </p>
+      <div style={{ background: 'var(--card-bg)', border: '1px solid var(--card-border)', borderRadius: '12px', padding: '20px 28px', textAlign: 'left', fontSize: '14px', lineHeight: 2 }}>
+        <strong>PGs Sheet — Row 1 headers:</strong><br />
+        <code style={{ color: 'var(--accent-color)' }}>id &nbsp;&nbsp; name &nbsp;&nbsp; floors</code><br />
+        <strong>Row 2 — your PG data:</strong><br />
+        <code style={{ color: 'var(--accent-color)', fontSize: '12px' }}>pg-1 &nbsp;&nbsp; JR Luxury - HiTech City &nbsp;&nbsp; []</code>
+      </div>
+      <button className="btn btn-primary" onClick={() => window.location.reload()}>🔄 Refresh Page</button>
+    </div>
+  );
 
   // Calculate KPIs
   let totalRooms = 0;
