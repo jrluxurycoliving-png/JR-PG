@@ -32,20 +32,11 @@ const Reports = () => {
   const chartData = Object.entries(incomeByModeObj).map(([name, value]) => ({ name, value }));
 
   const exportMonthlyExcel = () => {
-    const dataObj = monthlyTx
-      .sort((a, b) => new Date(a.date) - new Date(b.date))
-      .map(tx => {
-        const tenant = tenants.find(t => t.id === tx.tenantId);
-        return {
-          'Tenant Name': tenant?.name || 'Unknown',
-          'Date': new Date(tx.date).toLocaleDateString('en-IN'),
-          'Payment Mode': tx.paymentMode || tx.mode || '-',
-          'Type': tx.type,
-          'For Month': tx.forMonth || '-',
-          'Amount (₹)': tx.amount
-        };
-      });
-    dataObj.push({ 'Tenant Name': '', 'Date': '', 'Payment Mode': 'TOTAL', 'Type': '', 'For Month': '', 'Amount (₹)': totalIncome });
+    const dataObj = Object.entries(incomeByModeObj).map(([Mode, Amount]) => ({
+      'Payment Mode': Mode,
+      'Amount Received': Amount
+    }));
+    dataObj.push({ 'Payment Mode': 'TOTAL', 'Amount Received': totalIncome });
 
     const ws = XLSX.utils.json_to_sheet(dataObj);
     const wb = XLSX.utils.book_new();
@@ -144,47 +135,27 @@ const Reports = () => {
 
               <div style={{ display: 'flex', gap: '32px', marginTop: '32px' }}>
                 <div style={{ flex: 1 }}>
-                  <h4 style={{ marginBottom: '16px' }}>Transaction Details</h4>
+                  <h4 style={{ marginBottom: '16px' }}>Income By Payment Mode</h4>
                 <div className="table-container">
                   <table>
                     <thead>
                       <tr>
-                        <th>Tenant Name</th>
-                        <th>Date</th>
                         <th>Payment Mode</th>
-                        <th style={{ textAlign: 'right' }}>Amount (₹)</th>
+                        <th>Total Amount Received (₹)</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {monthlyTx.length === 0 ? (
+                      {Object.keys(incomeByModeObj).length === 0 ? (
                         <tr>
-                          <td colSpan="4" style={{ textAlign: 'center', color: 'var(--text-secondary)' }}>No transactions found for {selectedMonth}</td>
+                          <td colSpan="2" style={{ textAlign: 'center', color: 'var(--text-secondary)' }}>No transactions found for {selectedMonth}</td>
                         </tr>
                       ) : (
-                        <>
-                          {monthlyTx
-                            .sort((a, b) => new Date(a.date) - new Date(b.date))
-                            .map(tx => {
-                              const tenant = tenants.find(t => t.id === tx.tenantId);
-                              return (
-                                <tr key={tx.id}>
-                                  <td style={{ fontWeight: '500' }}>{tenant?.name || '—'}</td>
-                                  <td>{new Date(tx.date).toLocaleDateString('en-IN')}</td>
-                                  <td>
-                                    <span className="badge badge-success" style={{ fontSize: '12px' }}>
-                                      {tx.paymentMode || tx.mode || '—'}
-                                    </span>
-                                  </td>
-                                  <td style={{ textAlign: 'right', fontWeight: '600', color: 'var(--success)' }}>₹{Number(tx.amount).toLocaleString()}</td>
-                                </tr>
-                              );
-                            })
-                          }
-                          <tr style={{ borderTop: '2px solid var(--card-border)', fontWeight: '700' }}>
-                            <td colSpan="3" style={{ textAlign: 'right', paddingTop: '12px' }}>Total</td>
-                            <td style={{ textAlign: 'right', paddingTop: '12px', color: 'var(--success)', fontSize: '16px' }}>₹{totalIncome.toLocaleString()}</td>
+                        Object.entries(incomeByModeObj).map(([mode, amount]) => (
+                          <tr key={mode}>
+                            <td style={{ fontWeight: '500' }}>{mode}</td>
+                            <td>₹{amount.toLocaleString()}</td>
                           </tr>
-                        </>
+                        ))
                       )}
                     </tbody>
                   </table>
